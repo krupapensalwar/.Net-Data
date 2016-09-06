@@ -1,0 +1,272 @@
+SW registered
+Failed to load resource: net::ERR_FAILED
+Failed to load resource: net::ERR_FAILED
+console.log("Hello World")
+Hello World
+undefined
+console.write("Hello")
+Uncaught TypeError: console.write is not a function(…)
+window
+Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+var a;
+undefined
+console.log("Hello World")
+Hello World
+undefined
+console.log(typeof a);
+undefined
+undefined
+var a;
+undefined
+console.log(typeof a);
+undefined
+undefined
+a = "Hello World";
+"Hello World"
+console.log(typeof a);
+string
+undefined
+a = 42;
+42
+console.log(typeof a);
+number
+undefined
+a = true
+console.log(typeof a)
+boolean
+undefined
+a = null
+console.log(typeof a)
+object
+undefined
+a = undefined
+console.log(typeof a)
+undefined
+undefined
+a = {b : "c"}
+console.log(typeof a)
+object
+undefined
+function square(a){
+return a*a;
+}
+
+
+undefined
+GET chrome-search://thumb/https://chrome.google.com/webstore?utm_source=chrome-ntp-icon net::ERR_FAILED
+GET chrome-search://thumb/http://csharp-station.com/Tutorial/AdoDotNet/Lesson06 net::ERR_FAILED
+var result = square(4);
+console.log(result);
+16
+undefined
+square(16)
+256
+var square = 2
+undefined
+console.log(square)
+2
+undefined
+square(10)
+Uncaught TypeError: square is not a function(…)
+function square(a){
+return a*a;
+}
+
+
+undefined
+square(10)
+100
+var x = function square(a){
+return a*a;
+};
+console.log(x(5));
+
+
+25
+undefined
+x(4)
+16
+var x = function(a){
+return a*a;
+};
+console.log(x(5));
+
+
+25
+undefined
+var factorial = function fact(c){
+ return n<2 ? 1 : n*fact(n-1)
+};
+undefined
+console.log(factorial(3));
+Uncaught ReferenceError: n is not defined(…)
+var factorial = function fact(n){
+ return n<2 ? 1 : n*fact(n-1)
+};
+undefined
+console.log(factorial(3));
+6
+undefined
+console.log(fact(3));
+Uncaught ReferenceError: fact is not defined(…)
+var a = 5;
+x();
+
+function x(){
+a = 10;
+console.log(a);
+var a;
+}
+10
+undefined
+var a = 5;
+x();
+
+function x(){
+a = 10;
+console.log(a);
+
+}
+10
+undefined
+var a = 5;
+x();
+function x(){
+a = 10;
+console.log(a);
+
+}
+console.log(a);
+10
+10
+undefined
+var a = 5;
+x();
+function x(){
+a = 10;
+console.log(a);
+var a;
+}
+console.log(a);
+10
+5
+undefined
+var a = 5;
+var x();
+function x(){
+a = 10;
+console.log(a);
+var a;
+}
+console.log(a);
+Uncaught SyntaxError: Unexpected token (
+var a = 5;
+x();
+function x(){
+a = 10;
+console.log(a);
+var a;
+}
+console.log(a);
+10
+5
+undefined
+var a = 2;
+
+function x(){
+a = 10;
+console.log(a);
+//var a;
+}
+console.log(a);
+2
+undefined
+var a = 2;
+function x(){
+a = 10;
+console.log(a);
+//var a;
+}
+console.log(a);
+2
+undefined
+var a = 2;
+function x(){
+a = 10;
+console.log(a);
+//var a;
+}
+x();
+console.log(a);
+10
+10
+undefined
+var a = 2;
+function x(a){
+a = 10;
+console.log(a);
+//var a;
+}
+x();
+console.log(a);
+10
+2
+undefined
+function x()
+{
+var a = 1;
+   function y(){
+        var b=2;
+         function z(){
+            var c = 3;
+            console.log(a,b,c);
+        }
+     z();
+     console.log(a,b);  
+   }
+y();
+console.log(a);
+}
+x();
+1 2 3
+1 2
+1
+undefined
+function x()
+{
+var a = 1;
+   function y(){
+        var b=2;
+         function z(){
+            var c = 3;
+            console.log(a,b,c);
+        }
+     z();
+     console.log(a,b,c);  
+   }
+y();
+console.log(a,b,c);
+}
+x();
+1 2 3
+Uncaught ReferenceError: c is not defined(…)
+function x()
+{
+var a = 1;
+   function y(){
+        var b=2;
+         function z(){
+            var c = 3;
+            console.log(a,b,c);
+        }
+     z();
+     console.log(a,b);  
+   }
+y();
+console.log(a);
+}
+x();
+1 2 3
+1 2
+1
+undefined
