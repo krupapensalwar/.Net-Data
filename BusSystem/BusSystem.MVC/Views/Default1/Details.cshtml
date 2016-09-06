@@ -1,0 +1,42 @@
+﻿@model BusSystem.Core.BusInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BusInfo</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryInfo.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryInfo.CategoryName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BusId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

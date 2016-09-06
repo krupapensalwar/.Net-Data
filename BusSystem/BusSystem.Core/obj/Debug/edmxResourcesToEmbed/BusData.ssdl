@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusReservationSystemDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActualFare" Type="float" />
+    <Property Name="NofSeats" Type="int" Nullable="false" />
+    <Property Name="ScheduleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BookingDetails">
+    <Key>
+      <PropertyRef Name="BookingId" />
+      <PropertyRef Name="PassengerId" />
+    </Key>
+    <Property Name="BookingId" Type="int" Nullable="false" />
+    <Property Name="PassengerId" Type="int" Nullable="false" />
+    <Property Name="SeatNo" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="BusInfo">
+    <Key>
+      <PropertyRef Name="BusId" />
+    </Key>
+    <Property Name="BusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TotalSeats" Type="int" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BusSchedule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartureDate" Type="date" Nullable="false" />
+    <Property Name="ReturnDate" Type="date" />
+    <Property Name="DepartureTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ArrivalTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Duration" Type="time" Precision="7" Nullable="false" />
+    <Property Name="BusId" Type="int" Nullable="false" />
+    <Property Name="RouteId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoryInfo">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FareInfo">
+    <Key>
+      <PropertyRef Name="FareInfoId" />
+    </Key>
+    <Property Name="FareInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Fare" Type="float" />
+  </EntityType>
+  <EntityType Name="PassengerInfo">
+    <Key>
+      <PropertyRef Name="PassengerId" />
+    </Key>
+    <Property Name="PassengerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PassengerName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Contact" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RouteInfo">
+    <Key>
+      <PropertyRef Name="RouteId" />
+    </Key>
+    <Property Name="RouteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Source" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Destination" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="ViaRoute" Type="varchar" MaxLength="30" />
+    <Property Name="Distance" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="fk_BookingId">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookingDetails" Type="Self.BookingDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="BookingDetails">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BusId">
+    <End Role="BusInfo" Type="Self.BusInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusSchedule" Type="Self.BusSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusInfo">
+        <PropertyRef Name="BusId" />
+      </Principal>
+      <Dependent Role="BusSchedule">
+        <PropertyRef Name="BusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_CategoryId">
+    <End Role="CategoryInfo" Type="Self.CategoryInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusInfo" Type="Self.BusInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryInfo">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="BusInfo">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_FareCategoryId">
+    <End Role="CategoryInfo" Type="Self.CategoryInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FareInfo" Type="Self.FareInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryInfo">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="FareInfo">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PassengerId">
+    <End Role="PassengerInfo" Type="Self.PassengerInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookingDetails" Type="Self.BookingDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PassengerInfo">
+        <PropertyRef Name="PassengerId" />
+      </Principal>
+      <Dependent Role="BookingDetails">
+        <PropertyRef Name="PassengerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RouteId">
+    <End Role="RouteInfo" Type="Self.RouteInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusSchedule" Type="Self.BusSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RouteInfo">
+        <PropertyRef Name="RouteId" />
+      </Principal>
+      <Dependent Role="BusSchedule">
+        <PropertyRef Name="RouteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ScheduleId">
+    <End Role="BusSchedule" Type="Self.BusSchedule" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusSchedule">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="ScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="BusReservationSystemDBModelStoreContainer">
+    <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookingDetails" EntityType="Self.BookingDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusInfo" EntityType="Self.BusInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusSchedule" EntityType="Self.BusSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoryInfo" EntityType="Self.CategoryInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FareInfo" EntityType="Self.FareInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PassengerInfo" EntityType="Self.PassengerInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RouteInfo" EntityType="Self.RouteInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_BookingId" Association="Self.fk_BookingId">
+      <End Role="Booking" EntitySet="Booking" />
+      <End Role="BookingDetails" EntitySet="BookingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BusId" Association="Self.fk_BusId">
+      <End Role="BusInfo" EntitySet="BusInfo" />
+      <End Role="BusSchedule" EntitySet="BusSchedule" />
+    </AssociationSet>
+    <AssociationSet Name="fk_CategoryId" Association="Self.fk_CategoryId">
+      <End Role="CategoryInfo" EntitySet="CategoryInfo" />
+      <End Role="BusInfo" EntitySet="BusInfo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_FareCategoryId" Association="Self.fk_FareCategoryId">
+      <End Role="CategoryInfo" EntitySet="CategoryInfo" />
+      <End Role="FareInfo" EntitySet="FareInfo" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PassengerId" Association="Self.fk_PassengerId">
+      <End Role="PassengerInfo" EntitySet="PassengerInfo" />
+      <End Role="BookingDetails" EntitySet="BookingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RouteId" Association="Self.fk_RouteId">
+      <End Role="RouteInfo" EntitySet="RouteInfo" />
+      <End Role="BusSchedule" EntitySet="BusSchedule" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ScheduleId" Association="Self.fk_ScheduleId">
+      <End Role="BusSchedule" EntitySet="BusSchedule" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

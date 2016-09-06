@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusReservationSystemDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActualFare" Type="Double" />
+    <Property Name="NofSeats" Type="Int32" Nullable="false" />
+    <Property Name="ScheduleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BookingDetails" Relationship="Self.fk_BookingId" FromRole="Booking" ToRole="BookingDetails" />
+    <NavigationProperty Name="BusSchedule" Relationship="Self.fk_ScheduleId" FromRole="Booking" ToRole="BusSchedule" />
+  </EntityType>
+  <EntityType Name="BookingDetail">
+    <Key>
+      <PropertyRef Name="BookingId" />
+      <PropertyRef Name="PassengerId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" />
+    <Property Name="PassengerId" Type="Int32" Nullable="false" />
+    <Property Name="SeatNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Booking" Relationship="Self.fk_BookingId" FromRole="BookingDetails" ToRole="Booking" />
+    <NavigationProperty Name="PassengerInfo" Relationship="Self.fk_PassengerId" FromRole="BookingDetails" ToRole="PassengerInfo" />
+  </EntityType>
+  <EntityType Name="BusInfo">
+    <Key>
+      <PropertyRef Name="BusId" />
+    </Key>
+    <Property Name="BusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BusName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TotalSeats" Type="Int32" Nullable="false" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BusSchedules" Relationship="Self.fk_BusId" FromRole="BusInfo" ToRole="BusSchedule" />
+    <NavigationProperty Name="CategoryInfo" Relationship="Self.fk_CategoryId" FromRole="BusInfo" ToRole="CategoryInfo" />
+  </EntityType>
+  <EntityType Name="BusSchedule">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ReturnDate" Type="DateTime" Precision="0" />
+    <Property Name="DepartureTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="ArrivalTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Duration" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="BusId" Type="Int32" Nullable="false" />
+    <Property Name="RouteId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Self.fk_ScheduleId" FromRole="BusSchedule" ToRole="Booking" />
+    <NavigationProperty Name="BusInfo" Relationship="Self.fk_BusId" FromRole="BusSchedule" ToRole="BusInfo" />
+    <NavigationProperty Name="RouteInfo" Relationship="Self.fk_RouteId" FromRole="BusSchedule" ToRole="RouteInfo" />
+  </EntityType>
+  <EntityType Name="CategoryInfo">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BusInfoes" Relationship="Self.fk_CategoryId" FromRole="CategoryInfo" ToRole="BusInfo" />
+    <NavigationProperty Name="FareInfoes" Relationship="Self.fk_FareCategoryId" FromRole="CategoryInfo" ToRole="FareInfo" />
+  </EntityType>
+  <EntityType Name="FareInfo">
+    <Key>
+      <PropertyRef Name="FareInfoId" />
+    </Key>
+    <Property Name="FareInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Fare" Type="Double" />
+    <NavigationProperty Name="CategoryInfo" Relationship="Self.fk_FareCategoryId" FromRole="FareInfo" ToRole="CategoryInfo" />
+  </EntityType>
+  <EntityType Name="PassengerInfo">
+    <Key>
+      <PropertyRef Name="PassengerId" />
+    </Key>
+    <Property Name="PassengerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PassengerName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Contact" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="BookingDetails" Relationship="Self.fk_PassengerId" FromRole="PassengerInfo" ToRole="BookingDetails" />
+  </EntityType>
+  <EntityType Name="RouteInfo">
+    <Key>
+      <PropertyRef Name="RouteId" />
+    </Key>
+    <Property Name="RouteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Source" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Destination" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ViaRoute" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Distance" Type="Double" Nullable="false" />
+    <NavigationProperty Name="BusSchedules" Relationship="Self.fk_RouteId" FromRole="RouteInfo" ToRole="BusSchedule" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="fk_BookingId">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookingDetails" Type="Self.BookingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="BookingId" />
+      </Principal>
+      <Dependent Role="BookingDetails">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ScheduleId">
+    <End Role="BusSchedule" Type="Self.BusSchedule" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusSchedule">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="ScheduleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PassengerId">
+    <End Role="PassengerInfo" Type="Self.PassengerInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BookingDetails" Type="Self.BookingDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PassengerInfo">
+        <PropertyRef Name="PassengerId" />
+      </Principal>
+      <Dependent Role="BookingDetails">
+        <PropertyRef Name="PassengerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BusId">
+    <End Role="BusInfo" Type="Self.BusInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusSchedule" Type="Self.BusSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusInfo">
+        <PropertyRef Name="BusId" />
+      </Principal>
+      <Dependent Role="BusSchedule">
+        <PropertyRef Name="BusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_CategoryId">
+    <End Role="CategoryInfo" Type="Self.CategoryInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusInfo" Type="Self.BusInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryInfo">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="BusInfo">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_RouteId">
+    <End Role="RouteInfo" Type="Self.RouteInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusSchedule" Type="Self.BusSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RouteInfo">
+        <PropertyRef Name="RouteId" />
+      </Principal>
+      <Dependent Role="BusSchedule">
+        <PropertyRef Name="RouteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_FareCategoryId">
+    <End Role="CategoryInfo" Type="Self.CategoryInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FareInfo" Type="Self.FareInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryInfo">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="FareInfo">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BusReservationSystemDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bookings" EntityType="Self.Booking" />
+    <EntitySet Name="BookingDetails" EntityType="Self.BookingDetail" />
+    <EntitySet Name="BusInfoes" EntityType="Self.BusInfo" />
+    <EntitySet Name="BusSchedules" EntityType="Self.BusSchedule" />
+    <EntitySet Name="CategoryInfoes" EntityType="Self.CategoryInfo" />
+    <EntitySet Name="FareInfoes" EntityType="Self.FareInfo" />
+    <EntitySet Name="PassengerInfoes" EntityType="Self.PassengerInfo" />
+    <EntitySet Name="RouteInfoes" EntityType="Self.RouteInfo" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="fk_BookingId" Association="Self.fk_BookingId">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="BookingDetails" EntitySet="BookingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ScheduleId" Association="Self.fk_ScheduleId">
+      <End Role="BusSchedule" EntitySet="BusSchedules" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PassengerId" Association="Self.fk_PassengerId">
+      <End Role="PassengerInfo" EntitySet="PassengerInfoes" />
+      <End Role="BookingDetails" EntitySet="BookingDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BusId" Association="Self.fk_BusId">
+      <End Role="BusInfo" EntitySet="BusInfoes" />
+      <End Role="BusSchedule" EntitySet="BusSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="fk_CategoryId" Association="Self.fk_CategoryId">
+      <End Role="CategoryInfo" EntitySet="CategoryInfoes" />
+      <End Role="BusInfo" EntitySet="BusInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_RouteId" Association="Self.fk_RouteId">
+      <End Role="RouteInfo" EntitySet="RouteInfoes" />
+      <End Role="BusSchedule" EntitySet="BusSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="fk_FareCategoryId" Association="Self.fk_FareCategoryId">
+      <End Role="CategoryInfo" EntitySet="CategoryInfoes" />
+      <End Role="FareInfo" EntitySet="FareInfoes" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BusReservationSystemDBModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BusReservationSystemDBModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

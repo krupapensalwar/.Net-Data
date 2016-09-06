@@ -1,0 +1,48 @@
+﻿@model BusSystem.Core.BusInfo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BusInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalSeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryInfo.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryInfo.CategoryName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
