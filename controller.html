@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app ="myapp">
+	<head>
+		<title>
+		HELLO ANGULAR
+		</title>
+	</head>
+
+
+	<body ng-controller="home-controller">
+			<h1>Message from controller: {{message}}</h1>
+			<h1>parameter passed: {{name}}</h1>
+			<div>
+				<input ng-model="name">
+				<!-- <input type="text" value="Say HELLO" ng-="sayhello(name)" /> -->
+				<!-- <input type="button" value="Say HELLO" ng-click="sayhello(name)" /> -->
+				
+			</div>
+			<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+			
+			<script type="text/javascript">
+				angular.module("myapp",[]);
+				
+				console.log("Module is created");
+			</script>
+			<script>
+			var myapp = angular.module('myapp',[]);
+			myapp.controller('home-controller',['$scope',function($scope){
+			$scope.message = "Controller created successfully";
+			console.log("Controller created successfully");
+<!-- 			$scope.sayhello = function(name){
+				<!-- $scope.message = "Hello "+name; -->
+			 <!-- }  --> -->
+			}]);
+			</script>
+	</body>
+	
+	
+</html>
