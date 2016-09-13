@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app = 'myApp'>
+	<head>
+		<title>
+		HELLO ANGULAR
+		</title>
+	</head>
+
+
+	<body ng-controller = "HomeController as home">
+	<h1>Iterate over an Array</h1>
+	<div ng-repeat = "player in home.players">
+		name : <span>{{player.name}}</span><br>
+		city : <span ng-bind = "player.city"></span>
+		<hr />
+	</div>
+		
+			
+			
+			<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+			
+			<script type="text/javascript">
+				var myApp = angular.module('myApp',[])
+				.controller('HomeController',[function()
+				{
+					this.players = [
+					{empId : 1,name : 'mayurisi', city : 'Kolkata'},
+					{empId : 2,name : 'vedu', city : 'mumbai'},
+					{empId : 3,name : 'krupa', city : 'pune'}
+					];
+				}
+				]);
+			</script>
+	</body>
+	
+	
+</html>
