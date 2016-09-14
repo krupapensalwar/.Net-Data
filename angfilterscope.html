@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="costCtrl">
+
+<h2>Price: {{ price | currency }} <br />
+Amount as number : {{amount | number}}<br />
+Total cost as currency : {{totalCost | currency}}<br />
+Total Cost As INR : {{totalCost | currency:'&#163'}}<br />
+Shouting the name : {{name | uppercase}}<br />
+Whispering the name : {{name | lowercase}}<br />
+</h2>
+<!-- Start time : {{ctrl.startTime | date:'medium'}} -->
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('costCtrl', function($scope) {
+    $scope.price = 58;
+	$scope.amount = "50";
+	 $scope.totalCost = "100";
+	 $scope.name  = "Hello";
+});
+</script>
+
+<p>The currency filter formats a number to a currency format.</p>
+
+</body>
+</html>
