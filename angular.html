@@ -1,0 +1,113 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title></title>  
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
+</head>  
+<body>  
+  
+    <div ng-app="mainApp" ng-controller="CRUDController">  
+		<form name="myForm" ng-app="mainApp" ng-controller="CRUDController" novalidate>		
+        <table>
+		
+            <tr>  
+                <td>ProductId: </td>  
+                <td>  
+                    <span>{{ ProductModel.Id }}</span></td>  
+            </tr>  
+            <tr>  
+                <td>Name:</td>  
+                <td>  
+                    <input type="text" ng-model="ProductModel.Name" name="name" required pattern=".{5,}">
+					<span style="color:red" ng-show="myForm.name.$dirty && myForm.name.$invalid">
+					<span ng-show="myForm.name.$error.required">Product Name is required.</span>
+				</td>  
+            </tr>  
+            <tr>  
+                <td>Price:</td>  
+                <td>  
+                    <input type="number" name="Price" ng-model="ProductModel.Price" required>
+						<span style="color:red" ng-show="myForm.Price.$dirty && myForm.Price.$invalid">
+					<span ng-show="myForm.Price.$error.required">Price is required.</span>
+				</td>  
+            </tr>  
+            <tr>  
+                <td>  
+                    <input type="button" value="Save Data" ng-disabled="myForm.name.$dirty && myForm.name.$invalid ||
+							myForm.Price.$dirty && myForm.Price.$invalid" ng-click="AddData()" />
+				</td>  
+                <td>  
+                    <input type="button" value="Update Data" ng-click="UpdateData()" /></td>  
+            </tr> 
+				
+        </table>  
+		</form>	
+		
+        <table border="1" style="width: 300px">  
+            <thead>  
+                <th>Id</th>  
+                <th>Name</th>  
+                <th>Price</th>  
+            </thead>  
+            <tr ng-repeat="Product in ProductList" ng-click="BindSelectedData(Product)">  
+                <td>{{ Product.Id }}</td>  
+                <td>{{ Product.Name }}</td>  
+                <td>{{ Product.Price }}</td>  
+                <td>  
+                    <input type="button" value="Delete" ng-click="DeleteData(Product)" /></td>  
+            </tr>  
+        </table>  
+    </div>  
+  
+    <script type="text/javascript">  
+        var app = angular.module("mainApp", []);  
+        app.controller('CRUDController', function ($scope) {  
+  
+            $scope.ProductModel = {  
+                Id: 0,  
+                Price: 0,  
+                Name: '',  
+            };  
+  
+            $scope.ProductList = [];  
+            $scope.AddData = function () {  
+                var _product = {  
+                    Id: $scope.ProductList.length + 1,  
+                    Name: $scope.ProductModel.Name,  
+                    Price: $scope.ProductModel.Price  
+                };  
+                $scope.ProductList.push(_product);  
+                ClearModel();  
+            }  
+  
+            $scope.DeleteData = function (pro) {  
+                var _index = $scope.ProductList.indexOf(pro);  
+                $scope.ProductList.splice(_index, 1);  
+            }  
+  
+            $scope.BindSelectedData = function (pro) {  
+                $scope.ProductModel.Id = pro.Id;  
+                $scope.ProductModel.Name = pro.Name;  
+                $scope.ProductModel.Price = pro.Price;  
+            }  
+  
+            $scope.UpdateData = function () {  
+                $.grep($scope.ProductList, function (p) {  
+                    if (p.Id == $scope.ProductModel.Id) {  
+                        p.Name = $scope.ProductModel.Name;  
+                        p.Price = $scope.ProductModel.Price;  
+                    }  
+                });  
+                ClearModel();  
+            }  
+  
+            function ClearModel() {  
+                $scope.ProductModel.Id = 0;  
+                $scope.ProductModel.Name = '';  
+                $scope.ProductModel.Price = 0;  
+            }  
+        });  
+    </script>  
+</body>  
+</html>
